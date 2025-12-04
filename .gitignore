@@ -1,0 +1,35 @@
+# .gitignore
+
+# ===============================================
+# 1. Archivos de Entorno Virtual
+# Ignora la carpeta venv donde se guardan las librerías instaladas
+# Esto mantiene el repositorio limpio y pequeño.
+venv/
+
+# ===============================================
+# 2. Archivos de Configuración Local y Secretos
+
+# NUNCA subir el archivo .env (contiene el token secreto)
+.env
+
+# Archivos de caché para Python
+__pycache__/
+*.pyc
+
+# ===============================================
+# 3. Datos y Logs de Ejecución
+# Ignora cualquier archivo de log que se genere
+*.log
+*.sqlite3
+
+# ===============================================
+# 4. Archivos Específicos del Sistema Operativo
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Linux
+.directory
