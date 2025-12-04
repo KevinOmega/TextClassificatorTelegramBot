@@ -16,8 +16,9 @@ Sigue estos pasos para descargar, configurar y ejecutar el bot en tu máquina lo
 Abre tu terminal y clona el proyecto:
 
 ```bash
-git clone [https://github.com/TuUsuario/NombreDeTuRepositorio.git](https://github.com/TuUsuario/NombreDeTuRepositorio.git)
-cd NombreDeTuRepositorio
+git clone https://github.com/KevinOmega/TextClassificatorTelegramBot.git
+
+cd BayesBot
 ```
 
 ### Configurar el Entorno Virtual y Dependencias
