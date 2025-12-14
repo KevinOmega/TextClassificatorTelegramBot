@@ -30,29 +30,25 @@ async def accion_catalogo(update: Update, context: CallbackContext):
     """Acción para enviar el catálogo (PDF Real)."""
     
     # 1. Mensaje de confirmación inicial
-    await update.message.reply_text("📂 Claro, estoy subiendo el catálogo para ti. Un momento por favor...")
+    await update.message.reply_text("Claro, estoy subiendo el catálogo para ti. Un momento por favor...")
     
-    nombre_archivo = 'catalogo.pdf' # <--- CAMBIA ESTO POR EL NOMBRE EXACTO DE TU ARCHIVO
+    nombre_archivo = 'herramientas_proyecto_IA2.pdf'
 
     try:
-        # 2. Abrir el archivo en modo lectura binaria ('rb')
-        # 'with' se encarga de cerrar el archivo correctamente después de enviarlo
         with open(nombre_archivo, 'rb') as documento:
             
-            # 3. Enviar el documento
             await update.message.reply_document(
-                document=document,
-                caption="Aquí tienes nuestra lista de precios y productos actualizada 🚀", # Texto debajo del PDF
-                filename="Catalogo_Oficial_2024.pdf" # Nombre con el que le llega al usuario (opcional)
+                document=documento,
+                caption="Aquí tienes nuestra lista de precios y productos actualizada",
+                filename="Catalogo_Oficial_2024.pdf" 
             )
             
     except FileNotFoundError:
-        # Si olvidaste poner el archivo en la carpeta, el bot avisará en lugar de caerse
         print(f"ERROR: No se encontró el archivo {nombre_archivo}")
-        await update.message.reply_text("⚠️ Lo siento, no encuentro el archivo del catálogo en el sistema. Contacta a un humano.")
+        await update.message.reply_text("Lo siento, no encuentro el archivo del catálogo en el sistema. Contacta a un humano.")
     except Exception as e:
         print(f"ERROR AL ENVIAR: {e}")
-        await update.message.reply_text("⚠️ Ocurrió un error al intentar enviarte el archivo.")
+        await update.message.reply_text("Ocurrió un error al intentar enviarte el archivo.")
 
 async def accion_soporte(update: Update, context: CallbackContext):
     """Acción para soporte técnico."""
@@ -65,29 +61,24 @@ async def accion_soporte(update: Update, context: CallbackContext):
 
 async def accion_ubicacion(update: Update, context: CallbackContext):
     """Acción para consultas de ubicación (envía mapa)."""
-    await update.message.reply_text("📍 Nos encontramos aquí:")
-    # Ejemplo: Coordenadas de la Plaza Principal de Cochabamba
+    await update.message.reply_text("Nos encontramos aquí:")
     await update.message.reply_location(latitude=-17.3938, longitude=-66.1571)
 
 async def accion_generica(update: Update, context: CallbackContext, categoria: str):
     """Respuesta por defecto si no hay función específica."""
     await update.message.reply_text(f"Entendido, tu mensaje es de tipo: *{categoria.upper()}*. En breve te atendemos.", parse_mode=ParseMode.MARKDOWN)
 
-# --- DICCIONARIO DE MAPEO ---
-# Las claves deben coincidir EXACTAMENTE con las etiquetas en trainData.py
+
 ACCIONES = {
     "compra": accion_compra,
     "catalogo": accion_catalogo,
     "soporte": accion_soporte,
-    "consulta": accion_ubicacion, # Ejemplo: Asumimos que consulta es sobre ubicación
-    # "queja": accion_queja,
-    # "saludo": accion_saludo
+    "consulta": accion_ubicacion,
+
 }
 
 async def start(update: Update, context: CallbackContext) -> None:
     """Sends a welcome message when the command /start is issued."""
-    # update.effective_chat is a safe way to get the chat object
-    # await is required for all Telegram API calls (like reply_text)
     await update.message.reply_text('Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.')
 
 # 
