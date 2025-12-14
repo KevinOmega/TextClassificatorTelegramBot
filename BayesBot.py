@@ -13,10 +13,72 @@ from LazyBayes import NaiveBayesNativo
 modelo = NaiveBayesNativo()
 load_dotenv()
 
+
+
+async def accion_compra(update: Update, context: CallbackContext):
+    """Acción cuando el usuario quiere comprar."""
+    texto = (
+        "🛒 **¡Excelente decisión!**\n"
+        "Para procesar tu compra, puedes:\n"
+        "1. Pagar por QR.\n"
+        "2. Transferencia Bancaria.\n"
+        "¿Cuál prefieres?"
+    )
+    await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN)
+
+async def accion_catalogo(update: Update, context: CallbackContext):
+    """Acción para enviar el catálogo (PDF Real)."""
+    
+    # 1. Mensaje de confirmación inicial
+    await update.message.reply_text("Claro, estoy subiendo el catálogo para ti. Un momento por favor...")
+    
+    nombre_archivo = 'herramientas_proyecto_IA2.pdf'
+
+    try:
+        with open(nombre_archivo, 'rb') as documento:
+            
+            await update.message.reply_document(
+                document=documento,
+                caption="Aquí tienes nuestra lista de precios y productos actualizada",
+                filename="Catalogo_Oficial_2024.pdf" 
+            )
+            
+    except FileNotFoundError:
+        print(f"ERROR: No se encontró el archivo {nombre_archivo}")
+        await update.message.reply_text("Lo siento, no encuentro el archivo del catálogo en el sistema. Contacta a un humano.")
+    except Exception as e:
+        print(f"ERROR AL ENVIAR: {e}")
+        await update.message.reply_text("Ocurrió un error al intentar enviarte el archivo.")
+
+async def accion_soporte(update: Update, context: CallbackContext):
+    """Acción para soporte técnico."""
+    texto = (
+        "🛠 **Soporte Técnico**\n"
+        "Lamento que tengas problemas. Un técnico revisará tu caso.\n"
+        "Por favor, envíame una foto del error si es posible."
+    )
+    await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN)
+
+async def accion_ubicacion(update: Update, context: CallbackContext):
+    """Acción para consultas de ubicación (envía mapa)."""
+    await update.message.reply_text("Nos encontramos aquí:")
+    await update.message.reply_location(latitude=-17.3938, longitude=-66.1571)
+
+async def accion_generica(update: Update, context: CallbackContext, categoria: str):
+    """Respuesta por defecto si no hay función específica."""
+    await update.message.reply_text(f"Entendido, tu mensaje es de tipo: *{categoria.upper()}*. En breve te atendemos.", parse_mode=ParseMode.MARKDOWN)
+
+
+ACCIONES = {
+    "compra": accion_compra,
+    "catalogo": accion_catalogo,
+    "soporte": accion_soporte,
+    "consulta": accion_ubicacion,
+
+}
+
 async def start(update: Update, context: CallbackContext) -> None:
     """Sends a welcome message when the command /start is issued."""
-    # update.effective_chat is a safe way to get the chat object
-    # await is required for all Telegram API calls (like reply_text)
     await update.message.reply_text('Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.')
 
 # 
@@ -42,38 +104,24 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
     """Classifies the incoming text message using your Bayesian model."""
     user_text = update.message.text
 
+    # 1. Predecir
     prediccion, scores = modelo.predict(user_text)
+    categoria_detectada = prediccion.lower() # Aseguramos minúsculas para buscar en el diccionario
+
+    print(f"Mensaje: {user_text} | Clasificado como: {categoria_detectada}")
+
+    # 2. Buscar la función correspondiente en el diccionario
+    funcion_a_ejecutar = ACCIONES.get(categoria_detectada)
+
+    # 3. Ejecutar la acción
+    if funcion_a_ejecutar:
+        # Si existe una función específica, la ejecutamos
+        await funcion_a_ejecutar(update, context)
+    else:
+        # Si no hay función específica (ej. 'saludo' o 'queja'), usamos la genérica
+        await accion_generica(update, context, categoria_detectada)
 
     
-    # --- ⚠️ Your Classification Logic Goes Here ⚠️ ---
-    
-    # Placeholder for your actual Bayes classification logic:
-    # Example: predicted_class = model.predict(user_text) 
-    # For now, we'll just echo and say we're processing.
-    
-    # You would typically call a function like this:
-    # predicted_class = classify_text_with_bayes(user_text) 
-    
-    # For this example:
-    predicted_class = prediccion.upper()
-
-    sorted_scores = sorted(scores.items(), key=lambda item: item[1], reverse=True)
-
-    detalles = f"Detalle de Puntuaciones:\n\n"
-    for clase, score in sorted_scores:
-        # Un score más cercano a 0 (menos negativo) es mejor
-        # Ejemplo: -5.2 es mejor que -12.8
-          # barra = "█" * int((score + 50) / 2) if score > -50 else "" # Visualización simple
-        detalles += f"   {clase:10}: {score:.4f}\n"
-    detalles += "\n"
-    
-    response_text = f"Tu mensaje ha sido clasificado como: *{predicted_class}*\n\n{detalles}"
-
-    # Use reply_text and ParseMode if you need basic formatting
-    await update.message.reply_text(
-        response_text,
-        parse_mode=ParseMode.MARKDOWN # Using basic Markdown here
-    )
 
 # --- End Handler Functions ---
 
@@ -115,7 +163,7 @@ def main() -> None:
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     
     # 3. Start the Bot (Polling)
-    print("Bot is starting polling...")
+    print("El bot esta listo....")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
