@@ -55,5 +55,13 @@ datos_entrenamiento = [
     ["buenas noches estimad@s", "saludo"],
     ["hey hola", "saludo"],
     ["buen día", "saludo"],
-    ["saludos", "saludo"]
+    ["saludos", "saludo"],
+
+
+    ["hola catalogo", "catalogo"],
+    ["catalogo", "catalogo"],
+    ["catalogo", "catalogo"],
+    ["catalogo", "catalogo"],
+    ["catalogo", "catalogo"]
+
 ]
