@@ -16,7 +16,6 @@ load_dotenv()
 
 
 async def accion_compra(update: Update, context: CallbackContext):
-    """Acción cuando el usuario quiere comprar."""
     texto = (
         "🛒 **¡Excelente decisión!**\n"
         "Para procesar tu compra, puedes:\n"
@@ -27,9 +26,6 @@ async def accion_compra(update: Update, context: CallbackContext):
     await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN)
 
 async def accion_catalogo(update: Update, context: CallbackContext):
-    """Acción para enviar el catálogo (PDF Real)."""
-    
-    # 1. Mensaje de confirmación inicial
     await update.message.reply_text("Claro, estoy subiendo el catálogo para ti. Un momento por favor...")
     
     nombre_archivo = 'herramientas_proyecto_IA2.pdf'
@@ -51,7 +47,6 @@ async def accion_catalogo(update: Update, context: CallbackContext):
         await update.message.reply_text("Ocurrió un error al intentar enviarte el archivo.")
 
 async def accion_soporte(update: Update, context: CallbackContext):
-    """Acción para soporte técnico."""
     texto = (
         "🛠 **Soporte Técnico**\n"
         "Lamento que tengas problemas. Un técnico revisará tu caso.\n"
@@ -59,13 +54,13 @@ async def accion_soporte(update: Update, context: CallbackContext):
     )
     await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN)
 
+
 async def accion_ubicacion(update: Update, context: CallbackContext):
-    """Acción para consultas de ubicación (envía mapa)."""
     await update.message.reply_text("Nos encontramos aquí:")
     await update.message.reply_location(latitude=-17.3938, longitude=-66.1571)
 
+
 async def accion_generica(update: Update, context: CallbackContext, categoria: str):
-    """Respuesta por defecto si no hay función específica."""
     await update.message.reply_text(f"Entendido, tu mensaje es de tipo: *{categoria.upper()}*. En breve te atendemos.", parse_mode=ParseMode.MARKDOWN)
 
 
@@ -78,13 +73,10 @@ ACCIONES = {
 }
 
 async def start(update: Update, context: CallbackContext) -> None:
-    """Sends a welcome message when the command /start is issued."""
     await update.message.reply_text('Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.')
 
-# 
-# Note: Renamed from 'help' to 'help_command' to avoid conflicts with built-in 'help()'
+
 async def help_command(update: Update, context: CallbackContext) -> None:
-    """Sends a help message with usage instructions."""
     help_text = (
         "🤖 **BayesBot Commands**\n\n"
         "/start - Start the bot and get a welcome message.\n"
