@@ -12,6 +12,35 @@ from LazyBayes import NaiveBayesNativo
 modelo = NaiveBayesNativo()
 load_dotenv()
 
+async def button_handler(update: Update, context: CallbackContext) -> None:
+    query = update.callback_query
+    
+
+    await query.answer()
+    
+    if query.data == 'pago_qr':
+        await query.edit_message_text(
+            text="**Opción: Pago por QR**\n\n"
+                 "Escanea el código QR adjunto (imaginario por ahora) o usa este ID: `12345678`\n\n"
+                 "*Importante:* Envía una captura del comprobante aquí cuando termines.",
+            parse_mode=ParseMode.MARKDOWN
+        )
+        
+    elif query.data == 'pago_banco':
+        await query.edit_message_text(
+            text="**Opción: Transferencia Bancaria**\n\n"
+                 "🏦 **Banco:** Banco Nacional\n"
+                 "👤 **Titular:** Simon.\n"
+                 "🔢 **Cuenta:** 123412312\n"
+                 "🆔 **NIT/CI:** 555666777\n\n"
+                 "⚠️ *Importante:* Envía una captura del comprobante aquí cuando termines.",
+            parse_mode=ParseMode.MARKDOWN
+        )
+        
+    elif query.data == 'cancelar':
+        await query.edit_message_text(text="Entendido, hemos cancelado el proceso de compra. Avísanos si necesitas algo más.")
+
+
 
 
 async def accion_compra(update: Update, context: CallbackContext):
@@ -43,7 +72,7 @@ async def accion_catalogo(update: Update, context: CallbackContext):
             await update.message.reply_document(
                 document=documento,
                 caption="Aquí tienes nuestra lista de precios y productos actualizada",
-                filename="Catalogo_Oficial_2024.pdf" 
+                filename="Catalogo.pdf" 
             )
             
     except FileNotFoundError:
@@ -161,6 +190,17 @@ def main() -> None:
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     
+# 2. Add Handlers to the Application (as before)
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("help", help_command))
+    
+    # AGREGAR ESTA LÍNEA: Manejador para los botones
+    application.add_handler(CallbackQueryHandler(button_handler))
+
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    
+
+
     # 3. Start the Bot (Polling)
     print("El bot esta listo....")
     application.run_polling(allowed_updates=Update.ALL_TYPES)

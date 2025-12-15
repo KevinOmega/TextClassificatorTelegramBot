@@ -48,6 +48,8 @@ datos_entrenamiento = [
     ["cómo hago el reseteo de fábrica?", "soporte"],
     ["no reconoce la tarjeta sim", "soporte"],
     ["el audio se escucha entrecortado", "soporte"],
+    ["ayuda","soporte"],
+    ["soporte","soporte"],
 
     # --- SALUDO (Interacción social) ---
     ["hola buenos dias", "saludo"],
