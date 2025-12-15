@@ -2,10 +2,9 @@ import logging
 import os
 from dotenv import load_dotenv
 import pytz
-from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, JobQueue
-from telegram.constants import ParseMode # No need for others like ForceReply in this example
-# ... your handler functions will be here (e.g., async def start(update: Update, context: CallbackContext): ...)
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, JobQueue, CallbackQueryHandler
+from telegram.constants import ParseMode 
 from trainData import datos_entrenamiento
 from DataProcess import procesar_texto_desde_cero
 from LazyBayes import NaiveBayesNativo
@@ -16,14 +15,22 @@ load_dotenv()
 
 
 async def accion_compra(update: Update, context: CallbackContext):
+    keyboard = [
+        [
+            InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
+            InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
+        ],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
+    ]
+    
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
     texto = (
-        "🛒 **¡Excelente decisión!**\n"
-        "Para procesar tu compra, puedes:\n"
-        "1. Pagar por QR.\n"
-        "2. Transferencia Bancaria.\n"
-        "¿Cuál prefieres?"
+        "**¡Excelente decisión!**\n\n"
+        "Para finalizar tu pedido, por favor selecciona tu método de pago preferido:"
     )
-    await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN)
+    
+    await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup)
 
 async def accion_catalogo(update: Update, context: CallbackContext):
     await update.message.reply_text("Claro, estoy subiendo el catálogo para ti. Un momento por favor...")
@@ -48,7 +55,7 @@ async def accion_catalogo(update: Update, context: CallbackContext):
 
 async def accion_soporte(update: Update, context: CallbackContext):
     texto = (
-        "🛠 **Soporte Técnico**\n"
+        "**Soporte Técnico**\n"
         "Lamento que tengas problemas. Un técnico revisará tu caso.\n"
         "Por favor, envíame una foto del error si es posible."
     )
@@ -57,7 +64,7 @@ async def accion_soporte(update: Update, context: CallbackContext):
 
 async def accion_ubicacion(update: Update, context: CallbackContext):
     await update.message.reply_text("Nos encontramos aquí:")
-    await update.message.reply_location(latitude=-17.3938, longitude=-66.1571)
+    await update.message.reply_location(latitude=-17.3933818, longitude=-66.1460324)
 
 
 async def accion_generica(update: Update, context: CallbackContext, categoria: str):

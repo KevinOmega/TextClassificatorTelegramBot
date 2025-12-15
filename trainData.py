@@ -22,6 +22,7 @@ datos_entrenamiento = [
     ["confirmar pedido de los audífonos", "compra"],
     ["tienen stock para comprar ahora mismo?", "compra"],
     ["dame dos unidades por favor", "compra"],
+    ["compra","compra"],
 
     # --- CONSULTA (Dudas técnicas, stock, ubicación) ---
     ["precio del articulo", "consulta"],
