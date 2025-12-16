@@ -52,6 +52,10 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
 
 
 
+async def accion_saludo(update: Update, context: CallbackContext):
+    mensaje = 'Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.'
+    await update.message.reply_text(mensaje)
+
 
 async def accion_compra(update: Update, context: CallbackContext):
     keyboard = [
@@ -111,6 +115,7 @@ async def accion_generica(update: Update, context: CallbackContext, categoria: s
 
 
 ACCIONES = {
+    "saludo": accion_saludo,
     "compra": accion_compra,
     "catalogo": accion_catalogo,
     "soporte": accion_soporte,
