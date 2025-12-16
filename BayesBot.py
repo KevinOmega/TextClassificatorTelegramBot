@@ -160,8 +160,10 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
     """Classifies the incoming text message using your Bayesian model."""
     user_text = update.message.text
 
+    texto_procesado = procesar_texto_desde_cero(user_text)
+
     # 1. Predecir
-    prediccion, scores = modelo.predict(user_text)
+    prediccion, scores = modelo.predict(texto_procesado)
     categoria_detectada = prediccion.lower() # Aseguramos minúsculas para buscar en el diccionario
 
     print(f"Mensaje: {user_text} | Clasificado como: {categoria_detectada}")
