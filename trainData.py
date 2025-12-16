@@ -30,6 +30,9 @@ datos_entrenamiento = [
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
+    ["ubicacion", "ubicacion"],
+    ["ubicacion", "ubicacion"],
+   
 
     # --- SOPORTE (Ayuda técnica post-venta) ---
     ["necesito ayuda por favor", "soporte"],
@@ -56,10 +59,55 @@ datos_entrenamiento = [
     ["hola","saludo"],
 
 
+
+
     ["hola catalogo", "catalogo"],
     ["catalogo", "catalogo"],
     ["catalogo", "catalogo"],
     ["catalogo", "catalogo"],
-    ["catalogo", "catalogo"]
+    ["catalogo", "catalogo"],
 
+
+
+    ["macanas", "macanas"],
+    ["asdfkajdlfa", "macanas"],
+    ["no entiendo nada", "macanas"],
+    ["blablabla", "macanas"],
+    ["jajaja", "macanas"],
+    ["cualquier cosa", "macanas"],
+    ["xyz", "macanas"],
+    ["12345", "macanas"],
+    ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+    ["12345", "macanas"],
+    ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+    ["12345", "macanas"],
+    ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+       ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+    ["12345", "macanas"],
+    ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+    ["12345", "macanas"],
+    ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+       ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+    ["12345", "macanas"],
+    ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
+    ["12345", "macanas"],
+    ["fsdfsd", "macanas"],
+    ["...", "macanas"],
+    [" ", "macanas"],
 ]
