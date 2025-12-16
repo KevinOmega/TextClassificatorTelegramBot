@@ -221,15 +221,16 @@ async def accion_macanas(update: Update, context: CallbackContext):
 async def accion_iphone(update: Update, context: CallbackContext):
     keyboard = [
         [
-            InlineKeyboardButton("📱 iPhone 12", callback_data='iphone_12'),
-            InlineKeyboardButton("📱 iPhone 13", callback_data='iphone_13'),
+            InlineKeyboardButton("1 iPhone 12", callback_data='iphone_12'),
+            InlineKeyboardButton("2 iPhone 13", callback_data='iphone_13'),
+            InlineKeyboardButton("3 iPhone 14", callback_data='iphone_14'),
         ],
         [
-            InlineKeyboardButton("📱 iPhone 14", callback_data='iphone_14'),
-            InlineKeyboardButton("📱 iPhone 15", callback_data='iphone_15'),
+            InlineKeyboardButton("4 iPhone 15", callback_data='iphone_15'),
+            InlineKeyboardButton("5 iPhone 15 Pro", callback_data='iphone_15Pro'),
         ],
         [
-            InlineKeyboardButton("🚀 iPhone 16", callback_data='iphone_16'),
+            InlineKeyboardButton("6 iPhone 16", callback_data='iphone_16'),
         ],
         [
             InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')
