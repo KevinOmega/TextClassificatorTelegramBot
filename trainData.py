@@ -31,7 +31,8 @@ datos_entrenamiento = [
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
-    ["ubicacion", "ubicacion"],
+    ["Donde esta tu ubicacion", "ubicacion"],
+
    
 
     # --- SOPORTE (Ayuda técnica post-venta) ---

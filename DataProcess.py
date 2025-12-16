@@ -68,6 +68,17 @@ def obtener_raiz_casera(palabra):
 def procesar_texto_desde_cero(texto):
     texto = texto.lower()
 
+    reemplazos = (
+        ("á", "a"),
+        ("é", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ú", "u"),
+        ("ü", "u"),)
+    
+    for con_tilde, sin_tilde in reemplazos:
+        texto = texto.replace(con_tilde, sin_tilde)
+
 
     for signo in puntuacion:
         texto = texto.replace(signo, "")

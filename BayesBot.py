@@ -236,7 +236,33 @@ async def accion_iphone(update: Update, context: CallbackContext):
 
 
 async def accion_accesorios(update: Update, context: CallbackContext):
-    await update.message.reply_text(f"accesorios")
+    keyboard = [
+        [
+            InlineKeyboardButton("1 Audífonos EarPods con cable ", callback_data='Audífonos_EarPods_con_cable'),
+            InlineKeyboardButton("2 AirPods (3da generación)", callback_data='AirPods_3da_generación)'),
+            InlineKeyboardButton("3 AirPods (2da generación)", callback_data='AirPods_2da_generación'),
+        ],
+        [
+            InlineKeyboardButton("4 Cargador USB-C 20W", callback_data='Cargador_USB-C_20W'),
+            InlineKeyboardButton("5 Cargador MagSafe ", callback_data='Cargador_MagSafe '),
+        ],
+        [
+            InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')
+        ]
+    ]
+        
+    reply_markup = InlineKeyboardMarkup(keyboard)#interfaz
+    
+    await update.message.reply_text(
+        "**Catálogo de Apple** 🍎\n\n"
+        "Por favor, elige el modelo de celular que te interesa:",
+        reply_markup=reply_markup,
+        parse_mode=ParseMode.MARKDOWN
+    )
+        
+
+async def accion_queja(update: Update, context: CallbackContext):
+    await update.message.reply_text(f"No hay quejas choco")
 
 
 ACCIONES = {
@@ -247,7 +273,8 @@ ACCIONES = {
     "ubicacion": accion_ubicacion,
     "macanas":accion_macanas,
     "iphone":accion_iphone,
-    "accesorios":accion_accesorios
+    "accesorios":accion_accesorios,
+    "queja":accion_queja,
 }
 
 async def start(update: Update, context: CallbackContext) -> None:
