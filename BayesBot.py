@@ -127,6 +127,10 @@ async def accion_macanas(update: Update, context: CallbackContext):
     await update.message.reply_text(f"No entiendo lo que tratas de decirme puedes ser mas espesifico :D")
 
 
+async def accion_iphone(update: Update, context: CallbackContext):
+    await update.message.reply_text(f"iphone")
+
+
 ACCIONES = {
     "saludo": accion_saludo,
     "compra": accion_compra,
@@ -134,6 +138,7 @@ ACCIONES = {
     "soporte": accion_soporte,
     "ubicacion": accion_ubicacion,
     "macanas":accion_macanas,
+    "iphone":accion_iphone,
 }
 
 async def start(update: Update, context: CallbackContext) -> None:
