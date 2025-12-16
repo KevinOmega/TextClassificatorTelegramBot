@@ -19,12 +19,22 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
     await query.answer()
     
     if query.data == 'pago_qr':
-        await query.edit_message_text(
-            text="**Opción: Pago por QR**\n\n"
-                 "Escanea el código QR adjunto (imaginario por ahora) o usa este ID: `12345678`\n\n"
-                 "*Importante:* Envía una captura del comprobante aquí cuando termines.",
-            parse_mode=ParseMode.MARKDOWN
-        )
+
+        await query.message.delete()
+
+
+        qr_imagen = 'qr.png' 
+
+        
+        with open(qr_imagen, 'rb') as qr_file:
+            await context.bot.send_photo(
+                chat_id=update.effective_chat.id,
+                photo=qr_file,
+                caption="**Opción: Pago por QR**\n\n"
+                        "*Importante:* Envía una captura del comprobante aquí cuando termines.",
+                parse_mode=ParseMode.MARKDOWN
+            )
+
         
     elif query.data == 'pago_banco':
         await query.edit_message_text(
@@ -33,7 +43,7 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
                  "👤 **Titular:** Simon.\n"
                  "🔢 **Cuenta:** 123412312\n"
                  "🆔 **NIT/CI:** 555666777\n\n"
-                 "⚠️ *Importante:* Envía una captura del comprobante aquí cuando termines.",
+                 "*Importante:* Envía una captura del comprobante aquí cuando termines.",
             parse_mode=ParseMode.MARKDOWN
         )
         
