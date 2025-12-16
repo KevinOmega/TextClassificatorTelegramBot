@@ -142,7 +142,7 @@ async def accion_saludo(update: Update, context: CallbackContext):
 async def accion_catalogo(update: Update, context: CallbackContext):
     await update.message.reply_text("Claro, estoy subiendo el catálogo para ti. Un momento por favor...")
     
-    nombre_archivo = 'herramientas_proyecto_IA2.pdf'
+    nombre_archivo = '.pdf'
 
     try:
         with open(nombre_archivo, 'rb') as documento:
