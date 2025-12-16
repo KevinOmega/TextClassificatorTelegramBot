@@ -59,78 +59,12 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
                  "*Importante:* Envía una captura del comprobante aquí cuando termines.",
             parse_mode=ParseMode.MARKDOWN
         )
+
+
+    
         
     elif query.data == 'cancelar':
         await query.edit_message_text(text="Entendido, hemos cancelado el proceso de compra. Avísanos si necesitas algo más.")
-
-
-
-async def accion_saludo(update: Update, context: CallbackContext):
-    mensaje = 'Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.'
-    await update.message.reply_text(mensaje)
-
-
-# async def accion_compra(update: Update, context: CallbackContext):
-#     keyboard = [
-#         [
-#             InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
-#             InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
-
-#         ],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
-#         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
-#     ]
-    
-#     reply_markup = InlineKeyboardMarkup(keyboard)
-    
-#     texto = (
-#         "**¡Excelente decisión!**\n\n"
-#         "Para finalizar tu pedido, por favor selecciona tu método de pago preferido:"
-#     )
-    
-#     await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN, reply_markup=reply_markup)
-
-
-async def button_handler(update: Update, context: CallbackContext) -> None:
-    query = update.callback_query
-    await query.answer()
-    
-    # --- Lógica existente de Pagos ---
-    if query.data == 'pago_qr':
-        await query.message.delete()
-        qr_imagen = 'qr.png' 
-        try:
-            with open(qr_imagen, 'rb') as qr_file:
-                await context.bot.send_photo(
-                    chat_id=update.effective_chat.id,
-                    photo=qr_file,
-                    caption="**Opción: Pago por QR**\n\n*Importante:* Envía una captura del comprobante.",
-                    parse_mode=ParseMode.MARKDOWN
-                )
-        except FileNotFoundError:
-            await query.message.reply_text("Error: No se encontró la imagen QR.")
-
-    elif query.data == 'pago_banco':
-        await query.edit_message_text(
-            text="**Opción: Transferencia Bancaria**\n\n🏦 **Banco:** Nacional\n🔢 **Cuenta:** 123456\n\nEnvía comprobante.",
-            parse_mode=ParseMode.MARKDOWN
-        )
-        
-    elif query.data == 'cancelar':
-        await query.edit_message_text(text="Operación cancelada.")
-
-
 
     elif query.data.startswith('iphone_'):
 
@@ -163,30 +97,43 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
 
     elif query.data.startswith('color_'):
 
-        partes = query.data.split('_') 
+            partes = query.data.split('_') 
 
+
+            modelo = f"{partes[1]} {partes[2]}".title().replace('Iphone', 'iPhone')
+            color = partes[3].capitalize()
+
+            keyboard = [
+                [
+                    InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
+                    InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
+                ],
+                [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
         
-        modelo = f"{partes[1]} {partes[2]}".title().replace('Iphone', 'iPhone')
-        color = partes[3].capitalize()
+            await query.edit_message_text(
+                text=f"✅ **Resumen del Pedido**\n\n"
+                    f"📱 **Modelo:** {modelo}\n"
+                    f"🎨 **Color:** {color}\n\n"
+                    f"👇 **Selecciona tu método de pago:**",
+                    reply_markup=reply_markup,
+                    parse_mode=ParseMode.MARKDOWN
+                    )
         
-        keyboard = [
-            [
-                InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
-                InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
-            ],
-            [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
-        ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        
-        await query.edit_message_text(
-            text=f"✅ **Resumen del Pedido**\n\n"
-                 f"📱 **Modelo:** {modelo}\n"
-                 f"🎨 **Color:** {color}\n\n"
-                 f"👇 **Selecciona tu método de pago:**",
-                 reply_markup=reply_markup,
-                 parse_mode=ParseMode.MARKDOWN
-                 )
-        
+
+
+
+
+
+async def accion_saludo(update: Update, context: CallbackContext):
+    mensaje = 'Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.'
+    await update.message.reply_text(mensaje)
+
+
+
+
+
 
 
 
@@ -286,22 +233,23 @@ async def accion_macanas(update: Update, context: CallbackContext):
 async def accion_iphone(update: Update, context: CallbackContext):
     keyboard = [
         [
-            InlineKeyboardButton("📱 iPhone 12", callback_data='iphone_12'),
-            InlineKeyboardButton("📱 iPhone 13", callback_data='iphone_13'),
+            InlineKeyboardButton("1 iPhone 12", callback_data='iphone_12'),
+            InlineKeyboardButton("2 iPhone 13", callback_data='iphone_13'),
+            InlineKeyboardButton("3 iPhone 14", callback_data='iphone_14'),
         ],
         [
-            InlineKeyboardButton("📱 iPhone 14", callback_data='iphone_14'),
-            InlineKeyboardButton("📱 iPhone 15", callback_data='iphone_15'),
+            InlineKeyboardButton("4 iPhone 15", callback_data='iphone_15'),
+            InlineKeyboardButton("5 iPhone 15 Pro", callback_data='iphone_15Pro'),
         ],
         [
-            InlineKeyboardButton("🚀 iPhone 16", callback_data='iphone_16'),
+            InlineKeyboardButton("6 iPhone 16", callback_data='iphone_16'),
         ],
         [
             InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')
         ]
     ]
     
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    reply_markup = InlineKeyboardMarkup(keyboard)#interfaz
     
     await update.message.reply_text(
         "**Catálogo de Apple** 🍎\n\n"
