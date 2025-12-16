@@ -119,7 +119,7 @@ ACCIONES = {
     "compra": accion_compra,
     "catalogo": accion_catalogo,
     "soporte": accion_soporte,
-    "consulta": accion_ubicacion,
+    "ubicacion": accion_ubicacion,
 
 }
 

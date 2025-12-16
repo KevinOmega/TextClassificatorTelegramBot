@@ -10,7 +10,6 @@ datos_entrenamiento = [
     ["estoy molesto con la demora", "queja"],
     ["no sirve, se calienta mucho", "queja"],
     ["exijo la devolución de mi dinero", "queja"],
-    ["queja","queja"],
 
     # --- COMPRA (Intención directa de adquirir) ---
     ["quiero comprar este producto", "compra"],
@@ -25,7 +24,7 @@ datos_entrenamiento = [
     ["dame dos unidades por favor", "compra"],
     ["compra","compra"],
 
-     # --- ubicacion (Dudas técnicas, stock, ubicación) ---
+    # --- ubicacion (Dudas técnicas, stock, ubicación) ---
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
