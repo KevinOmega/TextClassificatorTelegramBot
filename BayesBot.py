@@ -62,15 +62,16 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
 
 
     
-        
+    
     elif query.data == 'cancelar':
         await query.edit_message_text(text="Entendido, hemos cancelado el proceso de compra. Avísanos si necesitas algo más.")
 
-    elif query.data.startswith('iphone_'):
+
+
+    elif query.data.startswith('IPhone_'):
 
         modelo_seleccionado = query.data
-        
-
+    
         keyboard = [
             [
                 InlineKeyboardButton("⚫ Negro", callback_data=f'color_{modelo_seleccionado}_negro'),
@@ -95,12 +96,14 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
         )
 
 
+
     elif query.data.startswith('color_'):
 
             partes = query.data.split('_') 
 
 
-            modelo = f"{partes[1]} {partes[2]}".title().replace('Iphone', 'iPhone')
+            modelo = f"{partes[1]} {partes[2]}"
+            precio = f"{partes[3]}"
             color = partes[3].capitalize()
 
             keyboard = [
@@ -116,10 +119,38 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
                 text=f"✅ **Resumen del Pedido**\n\n"
                     f"📱 **Modelo:** {modelo}\n"
                     f"🎨 **Color:** {color}\n\n"
+                    f"**Precio a pagar:** {precio}\n"
                     f"👇 **Selecciona tu método de pago:**",
                     reply_markup=reply_markup,
                     parse_mode=ParseMode.MARKDOWN
                     )
+            
+    elif query.data.startswith('accesorios_'):
+
+            partes = query.data.split('_') 
+
+
+            modelo = f"{partes[1]} {partes[2]}"
+            precio = f"{partes[3]}"
+
+            keyboard = [
+                [
+                    InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
+                    InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
+                ],
+                [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+        
+            await query.edit_message_text(
+                text=f"✅ **Resumen del Pedido**\n\n"
+                    f"**Modelo:** {modelo}\n"
+                    f"**Precio a pagar:** {precio}\n"
+                    f"👇 **Selecciona tu método de pago:**",
+                    reply_markup=reply_markup,
+                    parse_mode=ParseMode.MARKDOWN
+                    )
+    
         
 
 
@@ -142,7 +173,7 @@ async def accion_saludo(update: Update, context: CallbackContext):
 async def accion_catalogo(update: Update, context: CallbackContext):
     await update.message.reply_text("Claro, estoy subiendo el catálogo para ti. Un momento por favor...")
     
-    nombre_archivo = '.pdf'
+    nombre_archivo = 'Catalogo_Productos.pdf'
 
     try:
         with open(nombre_archivo, 'rb') as documento:
@@ -233,16 +264,16 @@ async def accion_macanas(update: Update, context: CallbackContext):
 async def accion_iphone(update: Update, context: CallbackContext):
     keyboard = [
         [
-            InlineKeyboardButton("1 iPhone 12", callback_data='iphone_12'),
-            InlineKeyboardButton("2 iPhone 13", callback_data='iphone_13'),
-            InlineKeyboardButton("3 iPhone 14", callback_data='iphone_14'),
+            InlineKeyboardButton("1 iPhone 12", callback_data='IPhone_12_500$'),
+            InlineKeyboardButton("2 iPhone 13", callback_data='IPhone_13_650$'),
+            InlineKeyboardButton("3 iPhone 14", callback_data='IPhone_14_750$'),
         ],
         [
-            InlineKeyboardButton("4 iPhone 15", callback_data='iphone_15'),
-            InlineKeyboardButton("5 iPhone 15 Pro", callback_data='iphone_15Pro'),
+            InlineKeyboardButton("4 iPhone 15", callback_data='IPhone_15_900$'),
+            InlineKeyboardButton("5 iPhone 15 Pro", callback_data='IPhone_15Pro_1100$'),
         ],
         [
-            InlineKeyboardButton("6 iPhone 16", callback_data='iphone_16'),
+            InlineKeyboardButton("6 iPhone 16", callback_data='IPhone_16_1300$'),
         ],
         [
             InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')
@@ -252,7 +283,7 @@ async def accion_iphone(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(keyboard)#interfaz
     
     await update.message.reply_text(
-        "**Catálogo de Apple** 🍎\n\n"
+        "**Catálogo de Iphons**\n\n"
         "Por favor, elige el modelo de celular que te interesa:",
         reply_markup=reply_markup,
         parse_mode=ParseMode.MARKDOWN
@@ -262,13 +293,13 @@ async def accion_iphone(update: Update, context: CallbackContext):
 async def accion_accesorios(update: Update, context: CallbackContext):
     keyboard = [
         [
-            InlineKeyboardButton("1 Audífonos EarPods con cable ", callback_data='Audífonos_EarPods_con_cable'),
-            InlineKeyboardButton("2 AirPods (3da generación)", callback_data='AirPods_3da_generación)'),
-            InlineKeyboardButton("3 AirPods (2da generación)", callback_data='AirPods_2da_generación'),
+            InlineKeyboardButton("1 Audífonos EarPods con cable ", callback_data='accesorios_EarPods_Cable_30$'),
+            InlineKeyboardButton("2 AirPods (3da generación)", callback_data='accesorios_AirPods_3gen_200$'),
+            InlineKeyboardButton("3 AirPods (2da generación)", callback_data='accesorios_AirPods_2gen_250$'),
         ],
         [
-            InlineKeyboardButton("4 Cargador USB-C 20W", callback_data='Cargador_USB-C_20W'),
-            InlineKeyboardButton("5 Cargador MagSafe ", callback_data='Cargador_MagSafe '),
+            InlineKeyboardButton("4 Cargador USB-C 20W", callback_data='accesorios_Cargador_USBC20W_40$'),
+            InlineKeyboardButton("5 Cargador MagSafe ", callback_data='accesorios_Cargador_MagSafe_50$'),
         ],
         [
             InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')
@@ -278,8 +309,8 @@ async def accion_accesorios(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(keyboard)#interfaz
     
     await update.message.reply_text(
-        "**Catálogo de Apple** 🍎\n\n"
-        "Por favor, elige el modelo de celular que te interesa:",
+        "**Catálogo de accesorios**\n\n"
+        "Por favor, elige lo que te interesa:",
         reply_markup=reply_markup,
         parse_mode=ParseMode.MARKDOWN
     )
