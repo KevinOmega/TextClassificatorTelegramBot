@@ -50,12 +50,12 @@ class NaiveBayesNativo:
 
             # B. Likelihoods: P(Palabra | Clase)
             self.log_likelihoods[c] = {}
-            denominator = total_palabras_en_clase[c] # Smoothing (+ |V|)
+            denominator = total_palabras_en_clase[c] + vocab_size # Smoothing (+ |V|)
 
             for palabra in self.vocabulario:
                 # Laplace Smoothing: (count + 1) / (total + vocab_size)
                 count = conteo_palabras_por_clase[c].get(palabra, 0)
-                prob = (count) / denominator
+                prob = (count + 1) / denominator
                 self.log_likelihoods[c][palabra] = math.log(prob)
 
         print("Entrenamiento finalizado.")

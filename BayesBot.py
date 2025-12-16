@@ -13,8 +13,14 @@ from email.message import EmailMessage
 
 
 
+
+
 modelo = NaiveBayesNativo()
 load_dotenv()
+
+
+EMAIL = os.environ.get("EMAIL")
+PASSWORD = os.environ.get("PASSWORD")
 
 async def button_handler(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
@@ -123,6 +129,19 @@ async def accion_soporte(update: Update, context: CallbackContext):
 
     # Texto original enviado (texto o caption si vino con multimedia)
     original_message = update.message.text or getattr(update.message, "caption", "") or "<sin texto>"
+
+    msg = EmailMessage()
+    msg["From"] = EMAIL
+    # msg["To"] = "202200093@est.umss.edu"
+    msg["To"] = "kevinomega01@gmail.com"
+    msg["Subject"] = "[Soporte Técnico]"
+    msg.set_content(f"Usuario: {nombre_usuario}\nID: {user_id}\nUsername: {username}\nTeléfono: {phone_number}\nMensaje: {original_message}")
+    # Conexión al servidor SMTP
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(EMAIL, PASSWORD)
+        server.send_message(msg)
+
+    print("Correo enviado correctamente ✅")
 
     # Preparar correo
 
