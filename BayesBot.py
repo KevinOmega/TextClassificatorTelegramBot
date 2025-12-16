@@ -62,7 +62,20 @@ async def accion_compra(update: Update, context: CallbackContext):
         [
             InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
             InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
+
         ],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
+        [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')],
         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
     ]
     
