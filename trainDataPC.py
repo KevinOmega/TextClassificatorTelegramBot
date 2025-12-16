@@ -10,7 +10,6 @@ datos_entrenamiento = [
     ["estoy molesto con la demora", "queja"],
     ["no sirve, se calienta mucho", "queja"],
     ["exijo la devolución de mi dinero", "queja"],
-    ["queja","queja"],
 
     # --- COMPRA (Intención directa de adquirir) ---
     ["quiero comprar este producto", "compra"],
@@ -25,14 +24,11 @@ datos_entrenamiento = [
     ["dame dos unidades por favor", "compra"],
     ["compra","compra"],
 
-     # --- ubicacion (Dudas técnicas, stock, ubicación) ---
+    # --- ubicacion (Dudas técnicas, stock, ubicación) ---
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
     ["ubicacion", "ubicacion"],
-    ["ubicacion", "ubicacion"],
-    ["ubicacion", "ubicacion"],
-   
 
     # --- SOPORTE (Ayuda técnica post-venta) ---
     ["necesito ayuda por favor", "soporte"],
@@ -59,55 +55,10 @@ datos_entrenamiento = [
     ["hola","saludo"],
 
 
-
-
     ["hola catalogo", "catalogo"],
     ["catalogo", "catalogo"],
     ["catalogo", "catalogo"],
     ["catalogo", "catalogo"],
-    ["catalogo", "catalogo"],
+    ["catalogo", "catalogo"]
 
-
-
-    ["macanas", "macanas"],
-    ["asdfkajdlfa", "macanas"],
-    ["no entiendo nada", "macanas"],
-    ["blablabla", "macanas"],
-    ["jajaja", "macanas"],
-    ["cualquier cosa", "macanas"],
-    ["xyz", "macanas"],
-    ["12345", "macanas"],
-    ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-    ["12345", "macanas"],
-    ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-    ["12345", "macanas"],
-    ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-       ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-    ["12345", "macanas"],
-    ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-    ["12345", "macanas"],
-    ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-       ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-    ["12345", "macanas"],
-    ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
-    ["12345", "macanas"],
-    ["fsdfsd", "macanas"],
-    ["...", "macanas"],
-    [" ", "macanas"],
 ]

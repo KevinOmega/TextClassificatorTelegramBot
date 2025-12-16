@@ -66,6 +66,7 @@ async def accion_compra(update: Update, context: CallbackContext):
         [
             InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
             InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
+
         ],
         
         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
@@ -133,8 +134,8 @@ async def accion_ubicacion(update: Update, context: CallbackContext):
     await update.message.reply_location(latitude=-17.3933818, longitude=-66.1460324)
 
 
-async def accion_generica(update: Update, context: CallbackContext, categoria: str):
-    await update.message.reply_text(f"Entendido, tu mensaje es de tipo: *{categoria.upper()}*. En breve te atendemos.", parse_mode=ParseMode.MARKDOWN)
+async def accion_macanas(update: Update, context: CallbackContext):
+    await update.message.reply_text(f"No entiendo lo que tratas de decirme puedes ser mas espesifico :D")
 
 
 ACCIONES = {
@@ -142,8 +143,8 @@ ACCIONES = {
     "compra": accion_compra,
     "catalogo": accion_catalogo,
     "soporte": accion_soporte,
-    "consulta": accion_ubicacion,
-
+    "ubicacion": accion_ubicacion,
+    "macanas":accion_macanas,
 }
 
 async def start(update: Update, context: CallbackContext) -> None:
@@ -191,7 +192,7 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
         await funcion_a_ejecutar(update, context)
     else:
         # Si no hay función específica (ej. 'saludo' o 'queja'), usamos la genérica
-        await accion_generica(update, context, categoria_detectada)
+        await accion_macanas(update, context, categoria_detectada)
 
     
 
