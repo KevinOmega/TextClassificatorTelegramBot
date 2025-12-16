@@ -8,6 +8,10 @@ from telegram.constants import ParseMode
 from trainData import datos_entrenamiento
 from DataProcess import procesar_texto_desde_cero
 from LazyBayes import NaiveBayesNativo
+import smtplib
+from email.message import EmailMessage
+
+
 
 modelo = NaiveBayesNativo()
 load_dotenv()
@@ -63,6 +67,7 @@ async def accion_compra(update: Update, context: CallbackContext):
             InlineKeyboardButton("📲 Pagar por QR", callback_data='pago_qr'),
             InlineKeyboardButton("🏦 Transferencia", callback_data='pago_banco'),
         ],
+        
         [InlineKeyboardButton("❌ Cancelar", callback_data='cancelar')]
     ]
     
@@ -102,7 +107,25 @@ async def accion_soporte(update: Update, context: CallbackContext):
         "Lamento que tengas problemas. Un técnico revisará tu caso.\n"
         "Por favor, envíame una foto del error si es posible."
     )
-    await update.message.reply_text(texto, parse_mode=ParseMode.MARKDOWN)
+
+
+    # Recopilar información del remitente y del mensaje
+    user = update.effective_user
+    user_id = getattr(user, "id", "desconocido")
+    username = getattr(user, "username", None)
+    nombre_usuario = " ".join(filter(None, [getattr(user, "first_name", ""), getattr(user, "last_name", "")])).strip() or None
+
+    # Intentar obtener número si el usuario compartió un contacto
+    phone_number = None
+    if getattr(update.message, "contact", None):
+        phone_number = getattr(update.message.contact, "phone_number", None)
+
+    # Texto original enviado (texto o caption si vino con multimedia)
+    original_message = update.message.text or getattr(update.message, "caption", "") or "<sin texto>"
+
+    # Preparar correo
+
+    
 
 
 async def accion_ubicacion(update: Update, context: CallbackContext):
@@ -147,9 +170,15 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
     """Classifies the incoming text message using your Bayesian model."""
     user_text = update.message.text
 
+    user_text_processed = procesar_texto_desde_cero(user_text)
+
+
+
     # 1. Predecir
-    prediccion, scores = modelo.predict(user_text)
+    prediccion, scores = modelo.predict(user_text_processed)
     categoria_detectada = prediccion.lower() # Aseguramos minúsculas para buscar en el diccionario
+
+
 
     print(f"Mensaje: {user_text} | Clasificado como: {categoria_detectada}")
 
