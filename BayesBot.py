@@ -1,9 +1,10 @@
+from email.mime import application
 import logging
 import os
 from dotenv import load_dotenv
 import pytz
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, JobQueue, CallbackQueryHandler
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext, JobQueue, CallbackQueryHandler, ContextTypes
 from telegram.constants import ParseMode 
 from trainData import datos_entrenamiento
 from DataProcess import procesar_texto_desde_cero
@@ -12,6 +13,8 @@ import smtplib
 from email.message import EmailMessage
 
 
+
+mensaje_correo = ""
 
 
 
@@ -159,43 +162,64 @@ async def accion_catalogo(update: Update, context: CallbackContext):
 
 async def accion_soporte(update: Update, context: CallbackContext):
     texto = (
-        "**Soporte Técnico**\n"
-        "Lamento que tengas problemas. Un técnico revisará tu caso.\n"
-        "Por favor, envíame una foto del error si es posible."
+        "🛠️ *Soporte Técnico*\n\n"
+        "Para ayudarte, necesitamos que nos brindes tu número de teléfono porfavor.\n"
+        "Presiona el botón para compartirlo y un personal de soporte se pondrá en contacto contigo."
+    )
+
+    keyboard = [
+        [KeyboardButton("📱 Compartir mi número", request_contact=True)]
+    ]
+
+    reply_markup = ReplyKeyboardMarkup(
+        keyboard,
+        resize_keyboard=True,
+        one_time_keyboard=True
     )
 
 
-    # Recopilar información del remitente y del mensaje
+    await update.message.reply_text(
+        texto,
+        reply_markup=reply_markup,
+        parse_mode="Markdown"
+    )
+
+
+    
+async def recibir_contacto_soporte(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    contact = update.message.contact
     user = update.effective_user
-    user_id = getattr(user, "id", "desconocido")
-    username = getattr(user, "username", None)
-    nombre_usuario = " ".join(filter(None, [getattr(user, "first_name", ""), getattr(user, "last_name", "")])).strip() or None
+    message = update.message.text
 
-    # Intentar obtener número si el usuario compartió un contacto
-    phone_number = None
-    if getattr(update.message, "contact", None):
-        phone_number = getattr(update.message.contact, "phone_number", None)
-
-    # Texto original enviado (texto o caption si vino con multimedia)
-    original_message = update.message.text or getattr(update.message, "caption", "") or "<sin texto>"
+    phone_number = contact.phone_number
+    user_id = user.id
+    nombre_usuario = " ".join(
+        filter(None, [user.first_name, user.last_name])
+    )
 
     msg = EmailMessage()
     msg["From"] = EMAIL
-    # msg["To"] = "202200093@est.umss.edu"
     msg["To"] = "kevinomega01@gmail.com"
     msg["Subject"] = "[Soporte Técnico]"
-    msg.set_content(f"Usuario: {nombre_usuario}\nID: {user_id}\nUsername: {username}\nTeléfono: {phone_number}\nMensaje: {original_message}")
-    # Conexión al servidor SMTP
+    msg.set_content(
+        f"Usuario: {nombre_usuario}\n"
+        f"ID: {user_id}\n"
+        f"Teléfono: {phone_number}\n"
+        f"Mensaje: {mensaje_correo}"
+    )
+
+
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(EMAIL, PASSWORD)
         server.send_message(msg)
 
+    await update.message.reply_text(
+        "✅ Gracias, por favor espera mientras un agente de soporte se pone en contacto contigo.",
+        reply_markup=ReplyKeyboardRemove()
+    )
+
     print("Correo enviado correctamente ✅")
-
-    # Preparar correo
-
-    
-
 
 async def accion_ubicacion(update: Update, context: CallbackContext):
     await update.message.reply_text("Nos encontramos aquí:")
@@ -301,6 +325,9 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
     """Classifies the incoming text message using your Bayesian model."""
     user_text = update.message.text
 
+    global mensaje_correo 
+    mensaje_correo = user_text
+
     user_text_processed = procesar_texto_desde_cero(user_text)
 
 
@@ -373,6 +400,9 @@ def main() -> None:
     application.add_handler(CallbackQueryHandler(button_handler))
 
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+
+    application.add_handler(CommandHandler("soporte", accion_soporte))
+    application.add_handler(MessageHandler(filters.CONTACT, recibir_contacto_soporte))
     
 
 
