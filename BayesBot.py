@@ -158,7 +158,7 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
 
 
 async def accion_saludo(update: Update, context: CallbackContext):
-    mensaje = 'Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.'
+    mensaje = '🔰 iTech Store 🔰\n\n¡Hola!, Somos iTech Store, tu tienda de confianza para productos Apple.\n ¿Cómo podemos ayudarte?'
     await update.message.reply_text(mensaje)
 
 
