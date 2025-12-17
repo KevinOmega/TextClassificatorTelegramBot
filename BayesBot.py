@@ -269,8 +269,17 @@ async def accion_ubicacion(update: Update, context: CallbackContext):
     await update.message.reply_location(latitude=-17.3933818, longitude=-66.1460324)
 
 
-async def accion_macanas(update: Update, context: CallbackContext):
-    await update.message.reply_text(f"No entiendo lo que tratas de decirme puedes ser mas espesifico :D")
+async def accion_macanas(update: Update, context: CallbackContext, categoria=None):
+    texto_guia = (
+        "Disculpa, no entendí muy bien tu mensaje soy un modelo bayeciano(un bot).\n\n"
+        "Intenta escribiendo alguna de estas opciones para que pueda ayudarte:\n\n"
+        "📱 *'Quiero comprar un celular'* -> Para ver celulares.\n"
+        "🎧 *'Busco accesorios'* -> Para cargadores o audífonos.\n"
+        "📍 *'Dónde están ubicados'* -> Para ver nuestra tienda.\n"
+        "📄 *'Ver catálogo'* -> Para descargar la lista de precios.\n"
+        "🆘 *'Necesito ayuda'* -> Para contactar soporte técnico."
+    )
+    await update.message.reply_text(texto_guia, parse_mode=ParseMode.MARKDOWN)
 
 
 async def accion_iphone(update: Update, context: CallbackContext):
