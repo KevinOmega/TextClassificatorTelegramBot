@@ -20,9 +20,9 @@ datos_entrenamiento = [
     ["iniciar", "saludo"],
     ["empezar", "saludo"],
     ["hay alguien ahi", "saludo"],
-    ["holi", "saludo"],
-    ["alo", "saludo"],
-    ["buen dia", "saludo"],
+    # ["holi", "saludo"],
+    # ["alo", "saludo"],
+    # ["buen dia", "saludo"],
 
 
     ["el precio es muy alto", "queja"],
@@ -45,15 +45,15 @@ datos_entrenamiento = [
     ["mala atencion", "queja"],
     ["no me gusto", "queja"],
     ["horrible experiencia", "queja"],
-    ["no lo recomiendo", "queja"],
-    ["llego tarde", "queja"],
-    ["no funciona bien", "queja"],
-    ["es un robo", "queja"],
-    ["muy costoso", "queja"],
-    ["mala calidad", "queja"],
-    ["estoy decepcionado", "queja"],
-    ["fraude", "queja"],
-    ["basura de producto", "queja"],
+    # ["no lo recomiendo", "queja"],
+    # ["llego tarde", "queja"],
+    # ["no funciona bien", "queja"],
+    # ["es un robo", "queja"],
+    # ["muy costoso", "queja"],
+    # ["mala calidad", "queja"],
+    # ["estoy decepcionado", "queja"],
+    # ["fraude", "queja"],
+    # ["basura de producto", "queja"],
 
 
     ["ubicacion", "ubicacion"],
@@ -76,8 +76,8 @@ datos_entrenamiento = [
     ["donde queda", "ubicacion"],
     ["ubicacion exacta", "ubicacion"],
     ["croquis", "ubicacion"],
-    ["mapa", "ubicacion"],
-    ["direccion", "ubicacion"],
+    # ["mapa", "ubicacion"],
+    # ["direccion", "ubicacion"],
 
 
     ["necesito ayuda", "soporte"],
@@ -100,13 +100,13 @@ datos_entrenamiento = [
     ["no funciona la camara", "soporte"],
     ["ayuda tecnica", "soporte"],
     ["soporte tecnico", "soporte"],
-    ["fallo de sistema", "soporte"],
-    ["mi celular murio", "soporte"],
-    ["no prende", "soporte"],
-    ["se traba mucho", "soporte"],
-    ["lento", "soporte"],
-    ["virus", "soporte"],
-    ["reparacion", "soporte"],
+    # ["fallo de sistema", "soporte"],
+    # ["mi celular murio", "soporte"],
+    # ["no prende", "soporte"],
+    # ["se traba mucho", "soporte"],
+    # ["lento", "soporte"],
+    # ["virus", "soporte"],
+    # ["reparacion", "soporte"],
 
 
     ["catalogo", "catalogo"],
@@ -129,7 +129,7 @@ datos_entrenamiento = [
     ["lista", "catalogo"],
     ["folleto", "catalogo"],
     ["inventario", "catalogo"],
-    ["disponible","catalogo"],
+    # ["disponible","catalogo"],
 
 
     ["quiero comprar un celular", "iphone"],
@@ -152,9 +152,9 @@ datos_entrenamiento = [
     ["dispositivos apple", "iphone"],
     ["comprar iphone", "iphone"],
     ["me interesa un iphone", "iphone"],
-    ["busco celular", "iphone"],
-    ["tienes el ultimo iphone", "iphone"],
-    ["iphone pro max", "iphone"],
+    # ["busco celular", "iphone"],
+    # ["tienes el ultimo iphone", "iphone"],
+    # ["iphone pro max", "iphone"],
  
 
 
@@ -163,13 +163,15 @@ datos_entrenamiento = [
     ["cargador", "accesorios"],
     ["audifonos", "accesorios"],
     ["airpods", "accesorios"],
-    ["cable usb", "accesorios"],
+    # ["cable usb", "accesorios"],
     ["auriculares", "accesorios"],
     ["tienes cargadores", "accesorios"],
     ["magsafe", "accesorios"],
-    ["accesorios para celular", "accesorios"],
+    # ["para ", "accesorios"],
     ["quiero unos audifonos", "accesorios"],
     ["cables", "accesorios"],
+    ["airpods", "accesorios"],
+    ["cargadores", "accesorios"],
     
     
 
@@ -195,5 +197,24 @@ datos_entrenamiento = [
     ["aburrido", "macanas"],
     ["tonto", "macanas"],
     ["feo", "macanas"],
-    ["nada", "macanas"]
+    # ["nada", "macanas"],
+    # ["2342wfs", "macanas"],
+    # ["55485456", "macanas"],
+    # ["jfaljfowfpwj", "macanas"],
+    # ["nada", "macanas"],
+    # ["2342wfs", "macanas"],
+    # ["55485456", "macanas"],
+    # ["jfaljfowfpwj", "macanas"],
+    # ["aburrido", "macanas"],
+    # ["tonto", "macanas"],
+    # ["feo", "macanas"],
+    # ["nada", "macanas"],
+    # ["2342wfs", "macanas"],
+    # ["55485456", "macanas"],
+    # ["jfaljfowfpwj", "macanas"],
+    # ["nada", "macanas"],
+    # ["2342wfs", "macanas"],
+    # ["55485456", "macanas"],
+    # ["jfaljfowfpwj", "macanas"],
+
 ]
