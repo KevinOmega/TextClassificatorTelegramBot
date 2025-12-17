@@ -217,38 +217,50 @@ async def accion_soporte(update: Update, context: CallbackContext):
 
 
     
-async def recibir_contacto_soporte(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def recibir_contacto_soporte(update: Update, context: ContextTypes.DEFAULT_TYPE, typo= "soporte"):
 
     contact = update.message.contact
     user = update.effective_user
+    username = update.effective_user.username
     message = update.message.text
 
-    phone_number = contact.phone_number
+    # phone_number = contact.phone_number
     user_id = user.id
     nombre_usuario = " ".join(
         filter(None, [user.first_name, user.last_name])
     )
 
+    reply =""
     msg = EmailMessage()
     msg["From"] = EMAIL
-    msg["To"] = "kevinomega01@gmail.com"
-    msg["Subject"] = "[Soporte Técnico]"
+    if(typo=="soporte"):
+        msg["To"] = "kevinomega01@gmail.com"
+        msg["Subject"] = "[Soporte Técnico]"
+    else:
+        msg["To"] = "202009708@est.umss.edu"
+        msg["Subject"] = "[Queja de Cliente]"
+    
     msg.set_content(
         f"Usuario: {nombre_usuario}\n"
         f"ID: {user_id}\n"
-        f"Teléfono: {phone_number}\n"
+        f"Username: @{username}\n"
+        # f"Teléfono: {phone_number}\n"
         f"Mensaje: {mensaje_correo}"
     )
+
+
 
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(EMAIL, PASSWORD)
         server.send_message(msg)
 
-    await update.message.reply_text(
+    if(typo=="soporte"):
+        await update.message.reply_text(
         "✅ Gracias, por favor espera mientras un agente de soporte se pone en contacto contigo.",
         reply_markup=ReplyKeyboardRemove()
     )
+    
 
     print("Correo enviado correctamente ✅")
 
@@ -317,7 +329,9 @@ async def accion_accesorios(update: Update, context: CallbackContext):
         
 
 async def accion_queja(update: Update, context: CallbackContext):
-    await update.message.reply_text(f"No hay quejas choco")
+    await update.message.reply_text(f"😞 Lamentamos que hayas tenido una mala experiencia. Por favor, espera unos minutos mientras nuestro personal se pone en contacto contigo para ayudarte.")
+
+    await recibir_contacto_soporte(update, context, "queja")
 
 
 ACCIONES = {
@@ -333,7 +347,7 @@ ACCIONES = {
 }
 
 async def start(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text('Hola, Bienvenid@, yo soy BayesBot! Dame tu consulta y te asignaré al personal adecuado para que te ayude.')
+    await update.message.reply_text('🔰 iTech Store 🔰\n\n¡Hola!, Somos iTech Store, tu tienda de confianza para productos Apple.\n ¿Cómo podemos ayudarte?')
 
 
 async def help_command(update: Update, context: CallbackContext) -> None:
