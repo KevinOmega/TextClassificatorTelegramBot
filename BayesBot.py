@@ -283,7 +283,7 @@ async def accion_iphone(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(keyboard)#interfaz
     
     await update.message.reply_text(
-        "**Catálogo de Iphons**\n\n"
+        "**Catálogo de celulares**\n\n"
         "Por favor, elige el modelo de celular que te interesa:",
         reply_markup=reply_markup,
         parse_mode=ParseMode.MARKDOWN
