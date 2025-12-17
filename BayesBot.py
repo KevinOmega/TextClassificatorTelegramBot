@@ -101,10 +101,11 @@ async def button_handler(update: Update, context: CallbackContext) -> None:
 
             partes = query.data.split('_') 
 
+            print("Imprimiendo partes",partes)
 
             modelo = f"{partes[1]} {partes[2]}"
             precio = f"{partes[3]}"
-            color = partes[3].capitalize()
+            color = partes[4].capitalize()
 
             keyboard = [
                 [
