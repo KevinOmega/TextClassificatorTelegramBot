@@ -271,7 +271,9 @@ async def accion_macanas(update: Update, context: CallbackContext, categoria=Non
         "🎧 *'Busco accesorios'* -> Para cargadores o audífonos.\n"
         "📍 *'Dónde están ubicados'* -> Para ver nuestra tienda.\n"
         "📄 *'Ver catálogo'* -> Para descargar la lista de precios.\n"
-        "🆘 *'Necesito ayuda'* -> Para contactar soporte técnico."
+        "🆘 *'Necesito ayuda'* -> Para contactar soporte técnico.\n"
+        "*'Reclamos/quejas'* -> Si tienes un reclamo queremos saberlo.\n\n"
+
     )
     await update.message.reply_text(texto_guia, parse_mode=ParseMode.MARKDOWN)
 
@@ -387,27 +389,26 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
 
     print(f"Mensaje: {user_text} | Clasificado como: {categoria_detectada}")
 
-    # 2. Buscar la función correspondiente en el diccionario
+    
     funcion_a_ejecutar = ACCIONES.get(categoria_detectada)
 
-    # 3. Ejecutar la acción
+   
     if funcion_a_ejecutar:
-        # Si existe una función específica, la ejecutamos
+        
         await funcion_a_ejecutar(update, context)
     else:
-        # Si no hay función específica (ej. 'saludo' o 'queja'), usamos la genérica
+        # Si no hay función específica, usamos macanas
         await accion_macanas(update, context, categoria_detectada)
 
     
 
-# --- End Handler Functions ---
+
 
 def main() -> None:
     # Use a timezone provided by pytz (e.g., 'America/New_York')
     # Change 'America/New_York' to your desired timezone if needed.
     
-    # Instanciamos la clase
-    # Separamos X e y
+
 
     datos_entrenamiento_procesados = []
 
@@ -425,25 +426,23 @@ def main() -> None:
     timezone = pytz.timezone('America/La_Paz')
 
 
-    # 1. Initialize the Application with an explicit timezone setting
+    
     application = (
         Application.builder()
-        .token(os.environ.get("TOKEN")) # <-- Pass the configured job_queue instance here
+        .token(os.environ.get("TOKEN")) 
         .build()
     )
 
-    # ... The rest of your main function (add_handler, run_polling) remains the same ...
+   
+    # application.add_handler(CommandHandler("start", start))
+    # application.add_handler(CommandHandler("help", help_command))
+    # application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     
-    # 2. Add Handlers to the Application (as before)
+
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     
-# 2. Add Handlers to the Application (as before)
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("help", help_command))
-    
-    # AGREGAR ESTA LÍNEA: Manejador para los botones
+
     application.add_handler(CallbackQueryHandler(button_handler))
 
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
@@ -453,7 +452,7 @@ def main() -> None:
     
 
 
-    # 3. Start the Bot (Polling)
+ 
     print("El bot esta listo....")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
