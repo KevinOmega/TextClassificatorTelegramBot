@@ -217,34 +217,29 @@ async def accion_soporte(update: Update, context: CallbackContext):
 
 
     
-async def recibir_contacto_soporte(update: Update, context: ContextTypes.DEFAULT_TYPE, typo= "soporte"):
+async def recibir_contacto_soporte(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     contact = update.message.contact
     user = update.effective_user
     username = update.effective_user.username
-    message = update.message.text
 
-    # phone_number = contact.phone_number
+    phone_number = contact.phone_number
     user_id = user.id
     nombre_usuario = " ".join(
         filter(None, [user.first_name, user.last_name])
     )
 
-    reply =""
     msg = EmailMessage()
     msg["From"] = EMAIL
-    if(typo=="soporte"):
-        msg["To"] = "kevinomega01@gmail.com"
-        msg["Subject"] = "[Soporte Técnico]"
-    else:
-        msg["To"] = "202009708@est.umss.edu"
-        msg["Subject"] = "[Queja de Cliente]"
+    msg["To"] = "kevinomega01@gmail.com"
+    msg["Subject"] = "[Soporte Técnico]"
+
     
     msg.set_content(
         f"Usuario: {nombre_usuario}\n"
         f"ID: {user_id}\n"
         f"Username: @{username}\n"
-        # f"Teléfono: {phone_number}\n"
+        f"Teléfono: {phone_number}\n"
         f"Mensaje: {mensaje_correo}"
     )
 
@@ -255,8 +250,7 @@ async def recibir_contacto_soporte(update: Update, context: ContextTypes.DEFAULT
         server.login(EMAIL, PASSWORD)
         server.send_message(msg)
 
-    if(typo=="soporte"):
-        await update.message.reply_text(
+    await update.message.reply_text(
         "✅ Gracias, por favor espera mientras un agente de soporte se pone en contacto contigo.",
         reply_markup=ReplyKeyboardRemove()
     )
@@ -338,9 +332,8 @@ async def accion_accesorios(update: Update, context: CallbackContext):
         
 
 async def accion_queja(update: Update, context: CallbackContext):
-    await update.message.reply_text(f"😞 Lamentamos que hayas tenido una mala experiencia. Por favor, espera unos minutos mientras nuestro personal se pone en contacto contigo para ayudarte.")
+    await update.message.reply_text(f"😞 Lamentamos que hayas tenido una mala experiencia. Por favor llena el siguiente formulario para que nuestro personal pueda atenderte de la mejor manera posible.\n\n https://docs.google.com/forms/d/e/1FAIpQLScvL5lTjEjDwgUw-apwwd0ojjx4b1XqhWKbmpSly-dIsOUrwQ/viewform?usp=sharing&ouid=108485986762957973838")
 
-    await recibir_contacto_soporte(update, context, "queja")
 
 
 ACCIONES = {
