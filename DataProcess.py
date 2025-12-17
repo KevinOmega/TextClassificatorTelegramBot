@@ -74,7 +74,7 @@ def procesar_texto_desde_cero(texto):
         ("í", "i"),
         ("ó", "o"),
         ("ú", "u"),
-        ("ü", "u"),)
+        )
     
     for con_tilde, sin_tilde in reemplazos:
         texto = texto.replace(con_tilde, sin_tilde)
