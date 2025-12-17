@@ -329,7 +329,7 @@ async def accion_accesorios(update: Update, context: CallbackContext):
         
 
 async def accion_queja(update: Update, context: CallbackContext):
-    await update.message.reply_text(f"😞 Lamentamos que hayas tenido una mala experiencia. Por favor, espera unos minutos mientras nuestro personal se pone en contacto contigo para ayudarte.")
+    await update.message.reply_text(f"😞 Lamentamos que hayas tenido una mala experiencia. Por favor llena el siguiente formulario para que nuestro personal pueda atenderte de la mejor manera posible.\n\n https://docs.google.com/forms/d/e/1FAIpQLScvL5lTjEjDwgUw-apwwd0ojjx4b1XqhWKbmpSly-dIsOUrwQ/viewform?usp=sharing&ouid=108485986762957973838")
 
     await recibir_contacto_soporte(update, context, "queja")
 
